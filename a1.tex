@@ -1,0 +1,43 @@
+\documentclass{article}
+\begin{document}
+\begin{enumerate}
+\item Proving 3. a) is:
+\begin{equation}
+b_{h+1} = b_{h}\sum_{i=0}^{h-1}{b_i} + b_{h}\sum_{i=0}^{h-2}{b_i}
+\end {equation}
+    \begin{description}
+			\item By the definition of a binary tree, a tree of height $h$ as subtrees of height $h-1$ and height $<h$
+			\item Then the total number of trees of height $h-1$ (case for the left subtree) times the sum of all possible trees of height $<h$ (case for the right subtree) added to the total number of trees of height $h-1$(case for the right subtree) times the sum of all possible trees of height $<h-1$ (case for the left subtree).
+			\item In other words:
+			\begin{equation}
+			b_{h+1} = b_{h}\sum_{i=0}^{h-1}{b_i} + b_{h}\sum_{i=0}^{h-2}{b_i}
+			\end {equation}
+    \end{description}
+\item Proving 3. b) is:
+		\begin{description}
+			\item By Complete Induction.
+			\item \textbf{Base Case $a_0$, $b_0$:}
+			\item $a_0$ = 0 \#By definition
+			\item $b_0$ = 1 \#By definition
+			\item \textbf{Inductive step}
+			\item Assume
+			\item $\forall k \in N, k< h, P(k)$
+			\item Observing
+			\begin {equation}
+			b_{h+1} = b_{h} \sum_{i = 0}^{h}b_i + b_h \sum_{i = 0}^{h-1}b_i
+			\end {equation}
+			\item \# by 3. a)
+			\item Then $b_h\times [b_0 +b_1 + ... + b_h + b_0 + b_1 + ... + b_{h-1}]$
+			\item Then $b_h \times [1 + a_1^2 - a_0^2 + a_2^2-a_1^2 + ... + a_h^2 -a_{h-1}^2 + 1 + a_1^2 - a_0^2 + ... + a_{h-1}^2 - a_{h-2}^2]$ \# By Inductive hypothesis
+			\item $b_h \times [a_h^2 + 1 + a_{h-1}^2 + 1]$ \# algebraic manipulation of a telescopic series.
+			\item $(a_h^2 - a_{h-1}^2) \times [a_{h+1} + a_h]$ \# definition of $b_h$, and by definition of $a_{h+1} = a_h^2 + 1$
+			\item $(a_h^2+1 - a_{h-1}^2-1) \times [a_{h+1} + a_h]$ \# Adding "zero", by adding one and subtracting one.
+			\item $(a_{h+1} - a_{h}) \times [a_{h+1} + a_h]$ \# definition of $a_{h+1}$, and through algebraic manipulation.
+			\item Thus, $b_{h+1} = (a_{h+1}^2 - a_{h}^2)$
+		\end{description}
+
+\end{enumerate}
+
+\end{document}
+
+% LocalWords:  brachial
