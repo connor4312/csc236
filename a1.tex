@@ -1,6 +1,60 @@
 \documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\title{CSC236 Winter 2015, Assignment 1}
+\author{Anish Krishna, Connor Peet, George Wu}
+\renewcommand{\today}{~}
+\hypersetup{pdfpagemode=Fullscreen,
+  colorlinks=true,
+  linkfileprefix={}}
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
 \begin{document}
+\maketitle
+
 \begin{enumerate}
+
+\item Proving $1 + mn \leq (1 + m)^n$.
+	\begin{description}
+	\item Let $P(n, m)$ be that $1 + mn \leq (1 + m)^n$.
+	\item Base Case: $P(0, 0)$
+		\begin{description}
+		\item $1 + mn \leq (1 + m)^n$
+		\item $1 + 0 \times 0 \leq (1 + 0)^0$
+		\item $1 \leq 1$ is true
+		\end{description}
+	\item Inductive Step for $P(n + 1, m)$: $\forall n, m \in \mathbb{N}, P(n, m) \implies P(n + 1, m)$
+		\begin{description}
+		\item Assume $n, m \in \mathbb{N}$
+			\begin{description}
+			\item Assume $P(n, m)$ \# Inductive Hypothesis
+				\begin{description}
+				\item Then $1 + mn \leq (1 + m)^n$ \# By Inductive Hypothesis
+				\item Then $1 + mn \leq (1 + m)^n + m \times (1 + m)^n - m$ \# since $(1 + m)^n \geq 1$
+				\item Then $1 + mn +  m\leq (1 + m)^n + (1 + m)^n$
+				\item Then $1 + mn + m \leq (1 + m)(1 + m)^n$
+				\item Then $1 + m(n + 1) \leq (1 + m)^{n + 1}$
+				\item Then $P(n + 1, m)$
+				\end{description}
+			\end{description}
+		\end{description}
+	\item Inductive Step for $P(n, m + 1)$: $\forall n, m \in \mathbb{N}, P(n, m) \implies P(n, m + 1)$
+		\begin{description}
+		\item Assume $n, m \in \mathbb{N}$
+			\begin{description}
+			\item Assume $P(n, m)$ \# Inductive Hypothesis
+				\begin{description}
+				\item Then $1 + mn \leq (1 + m)^n$ \# By Inductive Hypothesis
+				\item Then $1 + mn \leq (1 + m)^n + 2^n - n$ \# $2^n \geq n$ since $n \in  \mathbb{N}$
+				\item By binomial theorem, $(1 + m)^n = 1^0m^n + 1^1m^{n-1} \cdots 1^nm^0$ and $(2 + m)^n = 2^0m^n + 2^1m^{n-1} \cdots 2^nm^0$
+				\item Then $1 + mn \leq (2 + m)^n - n$ \# by binomial theorem
+				\item Then $1 + mn + n \leq (2 + m)^2$
+				\item Then $1 + n(m + 1) \leq (1 + (m + 1))^2$
+				\item Then $P(n, m + 1)$
+				\end{description}
+			\end{description}
+		\end{description}
+	\item Conclude $\forall n, m \in \mathbb{N}, P(n, m)$
+	\end{description}
 \item Proving 3. a) is:
 \begin{equation}
 b_{h+1} = b_{h}\sum_{i=0}^{h-1}{b_i} + b_{h}\sum_{i=0}^{h-2}{b_i}
