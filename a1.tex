@@ -58,6 +58,7 @@
 \item Proving 2.:
 	\begin{description}
 	\item Let $c \in \mathbb{R}$ and pick $c = 1000$
+	\item Pick $b = 3$
 	\item Let $P(k)$ be that $r_n \in O(\log_2(\log_2 n))$
 	\item By Complete Induction:
 	\item \textbf{Base Case: n = 3}
@@ -90,6 +91,7 @@ b_{h+1} = b_{h}\sum_{i=0}^{h-1}{b_i} + b_{h}\sum_{i=0}^{h-2}{b_i}
     \end{description}
 \item Proving 3. b) is:
 		\begin{description}
+			\item Predicate: $P(n)$ be that $b_h = a_n^2 -a_{n-1}^2$
 			\item By Complete Induction.
 			\item \textbf{Base Case $a_0$, $b_0$:}
 			\item $a_0$ = 0 \#By definition
@@ -104,11 +106,12 @@ b_{h+1} = b_{h}\sum_{i=0}^{h-1}{b_i} + b_{h}\sum_{i=0}^{h-2}{b_i}
 			\item \# by 3. a)
 			\item Then $b_h\times [b_0 +b_1 + ... + b_h + b_0 + b_1 + ... + b_{h-1}]$
 			\item Then $b_h \times [1 + a_1^2 - a_0^2 + a_2^2-a_1^2 + ... + a_h^2 -a_{h-1}^2 + 1 + a_1^2 - a_0^2 + ... + a_{h-1}^2 - a_{h-2}^2]$ \# By Inductive hypothesis
-			\item $b_h \times [a_h^2 + 1 + a_{h-1}^2 + 1]$ \# algebraic manipulation of a telescopic series.
-			\item $(a_h^2 - a_{h-1}^2) \times [a_{h+1} + a_h]$ \# definition of $b_h$, and by definition of $a_{h+1} = a_h^2 + 1$
-			\item $(a_h^2+1 - a_{h-1}^2-1) \times [a_{h+1} + a_h]$ \# Adding "zero", by adding one and subtracting one.
-			\item $(a_{h+1} - a_{h}) \times [a_{h+1} + a_h]$ \# definition of $a_{h+1}$, and through algebraic manipulation.
-			\item Thus, $b_{h+1} = (a_{h+1}^2 - a_{h}^2)$
+			\item $= b_h \times [a_h^2 + 1 + a_{h-1}^2 + 1]$ \# algebraic manipulation of a telescopic series.
+			\item $= (a_h^2 - a_{h-1}^2) \times [a_{h+1} + a_h]$ \# definition of $b_h$, and by definition of $a_{h+1} = a_h^2 + 1$
+			\item $= (a_h^2+1 - a_{h-1}^2-1) \times [a_{h+1} + a_h]$ \# Adding "zero", by adding one and subtracting one.
+			\item $= (a_{h+1} - a_{h}) \times [a_{h+1} + a_h]$ \# definition of $a_{h+1}$, and through algebraic manipulation.
+			\item $= a_{h+1}^2 - a_{h}^2$
+			\item Thus, $b_{h+1} = (a_{h+1}^2 - a_{h}^2)$, $\forall h \in \mathbb{N}$
 		\end{description}
 
 \end{enumerate}
