@@ -1,0 +1,201 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,mathrsfs,listings,color}
+\title{CSC236 Winter 2015, Assignment 2}
+\author{Connor Peet}
+\renewcommand{\today}{~}
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    breaklines=false,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+\begin{document}
+\maketitle
+
+\begin{itemize}
+\item Proof of 1(a). We define $A \in \mathcal{F}, P(A)$ as $T(A) \Leftrightarrow A$, $N(A) \Leftrightarrow \neg A$, and that $T(A)$ and $N(A)$ have negation only on variables.
+    \begin{description}
+    \item \underline{Base Case:}
+        \begin{description}
+        \item Let there be $i \in \mathbb{N}, X_i$.
+        \item Then $X_i \in \mathcal{F}$ by definition of $\mathcal{F}$.
+        \item Then $T(X_i) = X_i$ by definition of $T$.
+        \item Then $T(X_i) \Leftrightarrow X_i$ and it has negation only on variables.
+        \item Then $P(X_i)$.
+        \end{description}
+    \item \underline{Base Case:}
+        \begin{description}
+        \item Let there be $i \in \mathbb{N}, X_i$.
+        \item Then $\neg X_i \in \mathcal{F}$ by definition of $\mathcal{F}$.
+        \item Then $T(\neg X_i) = N(X_i) \Leftrightarrow \neg X_i$ by definition of $T$ and $N$.
+        \item Then $T(\neg X_i) \Leftrightarrow \neg X_i$ and it has negation only on variables.
+        \item Then $P(\neg X_i)$.
+        \end{description}
+    \item \underline{Inductive Step:}
+        \begin{description}
+        \item Let $A, B$ be arbitrary elements of $\mathcal{F}$.
+        \item Assume $P(A)$, $P(B)$ - inductive hypothesis.
+            \begin{description}
+            \item Then the forumulas in $\mathcal{F}$ defined by these elements are $A \land B$, $A \lor B$, $\neg(A \land B)$, and $\neg(A \lor B)$. Every element in $\mathcal{F}$, aside from the base cases, may be generated in this way.
+            \item \underline{Case:} $A \land B$
+                \begin{description}
+                \item Then $T(A \land B) = T(A) \land T(B)$.
+                \item Then $T(A \land B) \Leftrightarrow A \land B$ and $P(A)$, $P(B)$ by inductive hypothesis.
+                \item Then $T$ is equivalent and has negation only on variables, so $P(A \land B)$.
+                \end{description}
+            \item \underline{Case:} $A \lor B$
+                \begin{description}
+                \item Then $T(A \lor B) = T(A) \lor T(B)$.
+                \item Then $T(A \lor B) \Leftrightarrow A \lor B$ and $P(A)$, $P(B)$ by inductive hypothesis.
+                \item Then $T$ is equivalent and has negation only on variables, so $P(A \lor B)$.
+                \end{description}
+            \item \underline{Case:} $\neg(A \land B)$
+                \begin{description}
+                \item Then $T(\neg(A \land B)) \Leftrightarrow N(A \land B)$ by $T(A) = N(\neg A)$.
+                \item Then $T(\neg(A \land B)) \Leftrightarrow N(A) \lor N(B)$.
+                \item Then $T(\neg(A \land B)) \Leftrightarrow \neg A \lor \neg B$ and $P(A)$, $P(B)$ by inductive hypothesis.
+                \item Then $N(A \land B) \Leftrightarrow \neg(A \land B)$ and $N$ has negation only on variables, so $P(\neg(A \land B))$.
+                \end{description}
+            \item \underline{Case:} $\neg(A \lor B)$
+                \begin{description}
+                \item Then $T(\neg(A \lor B)) \Leftrightarrow N(A \lor B)$ by $T(A) = N(\neg A)$.
+                \item Then $T(\neg(A \lor B)) \Leftrightarrow N(A) \land N(B)$.
+                \item Then $T(\neg(A \lor B)) \Leftrightarrow \neg A \land \neg B$ and $P(A)$, $P(B)$ by inductive hypothesis.
+                \item Then $N(A \lor B) \Leftrightarrow \neg(A \lor B)$ and $N$ has negation only on variables, so $P(\neg(A \land B))$.
+                \end{description}
+            \end{description}
+        \end{description}
+    \item Then $\forall A \in \mathcal{F}, P(A)$
+    \end{description}
+\item 1(b).
+    \lstinputlisting[language=Python]{1b.py}
+\item 1(c). Let the size function $A \in \mathcal{F}, S(A)$ be defined as:
+    \begin{itemize}
+    \item $S(A) = S(\neg A) = 1$ where $A$ is a variable, such as $i \in \mathbb{N}, X_i$.
+    \item $S(\neg A) = S(A) + 0.5$ (this makes our base cases easier).
+    \item $S(A \land B) = S(A \lor B) = max(S(A), S(B)) + 1$.
+    \end{itemize}
+
+    Also, let $A \in \mathcal{F}, H(A)$ to be that the Python program correctly outputs $T(A)$.
+
+    \begin{description}
+    \item \underline{Base Case:} $A \in \mathcal{F}, S(A) = 1$
+        \begin{description}
+        \item Then $A$ must be a single variable.
+        \item Then $T(A) = A$ by definition of T.
+        \item Also program returns $A$ from line 4.
+        \item Then $H(A)$.
+        \end{description}
+    \item \underline{Base Case:} $A \in \mathcal{F}, S(A) = 1.5$
+        \begin{description}
+        \item Then $A$ must be the negation of a single variable.
+        \item Then $T(\neg A) = N(\neg A) = \neg A$ by definition of T and N.
+        \item Also program returns $\neg A$ from line 4.
+        \item Then $H(A)$.
+        \end{description}
+    \item \underline{Inductive Step:}
+        \item Let $A \in \mathcal{F}$.
+        \item Assume $\forall B \in \mathcal{F}, S(A) \geq 2 \land S(B) < S(A) \implies H(B)$ - inductive hypothesis.
+            \begin{description}
+            \item Then $\exists C, D \in \mathcal{F}$ such that $A = C \land D$, $A = C \lor D$, $A = \neg(C \land D)$, or $A = \neg(C \lor D)$, since $S(A) \geq 2$.
+            \item Then $S(A) = max(S(C), S(D)) + 1$.
+            \item Then $S(A) - 1 = max(S(C), S(D))$.
+            \item Then $S(A) > S(C) \land S(A) > S(D)$.
+            \item Then we can use the inductive hypothesis on $C$ and $D$.
+            \item \underline{Case:} $A = C \land D$
+                \begin{description}
+                \item Then $T(A) = T(C \land D) = T(C) \land T(D)$
+                \item Also the program returns $T(C) \land T(D)$ from line 26.
+                \item Also the program outputs for $T(C)$ and $T(D)$ are correct by the inductive hypothesis.
+                \item Then the program outputs the correct value for $T(C \land D)$
+                \item Then H(A)
+                \end{description}
+            \item \underline{Case:} $A = C \lor D$
+                \begin{description}
+                \item Then $T(A) = T(C \lor D) = T(C) \lor T(D)$
+                \item Also the program returns $T(C) \lor T(D)$ from line 26.
+                \item Also the program outputs for $T(C)$ and $T(D)$ are correct by the inductive hypothesis.
+                \item Then the program outputs the correct value for $T(C \lor D)$
+                \item Then H(A)
+                \end{description}
+            \item \underline{Case:} $A = \neg(C \land D)$
+                \begin{description}
+                \item Then $T(A) = T(\neg (C \land D)) = N(C \land D) = N(C) \lor N(D) = T(\neg C) \lor T(\neg D)$
+                \item Also the program returns $T(\neg C) \lor T(\neg D)$ from line 18.
+                \item Also the program outputs for $T(\neg C)$ and $T(\neg D)$ are correct by the inductive hypothesis.
+                \item Then the program outputs the correct value for $T(\neg(C \land D))$
+                \item Then H(A)
+                \end{description}
+            \item \underline{Case:} $A = \neg(C \lor D)$
+                \begin{description}
+                \item Then $T(A) = T(\neg (C \lor D)) = N(C \lor D) = N(C) \land N(D) = T(\neg C) \land T(\neg D)$
+                \item Also the program returns $T(\neg C) \land T(\neg D)$ from line 22.
+                \item Also the program outputs for $T(\neg C)$ and $T(\neg D)$ are correct by the inductive hypothesis.
+                \item Then the program outputs the correct value for $T(\neg(C \lor D))$
+                \item Then H(A)
+                \end{description}
+            \end{description}
+    \end{description}
+\item 2(a)
+    \begin{itemize}
+    \item \underline{Termination}. Loop invariants are:
+        \begin{enumerate}
+        \item $a = m \times k$. At the start of the loop, $k = 1$ and $a = m$, so $a = m \times 1$. Thereafter we only change either variable by incrementing $k$ by $1$ and adding $m$ to $a$ in the same iteration.
+        \item $b = n \times l$ by the same logic.
+        \item At each iteration, either $a$ \underline{xor} $b$ increase in value.
+        \end{enumerate}
+    The loop terminates when $a = b$, that is, $m \times k = n \times l$. One easily definable value $y$ where this happens is $y = m \times n$, at which point $k = n$ and $l = m$. At each iternation, exactly one of the values $a$ or $b$ grow, so we know that at some point (if the loop does not terminate earlier):
+        \begin{itemize}
+        \item $a = y \land b < y$ or
+        \item $b = k \land a < y$
+        \end{itemize}
+    Let's look at the first point. $a > b$, so $m \times n > n \times l$. Then the difference between them is $n \times (m - l)$ where $(m - l) \in \mathbb{N}$. This difference is a multiple of $n$, so with continued iterations $l$ approaches $m$. At the point where $l = m$, $a = b = n \times m = y$ so the loop will terminate. The same logic may be applied to the second case, $b = k \land a < y$.
+    \item \underline{Partial Correctness}.
+        \begin{description}
+        \item The program terminates when $a = b$. Based on the invariants given above, we know that $a = m \times k$ and $b = n \times l$.
+        \item Then $k \times m = b$, and $l \times n = b = a$. Therefore the post-condition is satisfied.
+        \end{description}
+    \end{itemize}
+\item 2(b). Natural number $c$ may be expressed as $c = (xm) \times (yn)$ where $x, y, \in \mathbb{N}$. The proof above may be repeated with a $y$ value of $c$, in order to prove that the program terminates either at or before the point $a = b = c$.
+\item 2(c).
+    \begin{itemize}
+    \item \underline{Termination}. Loop invariants are:
+        \begin{enumerate}
+        \item $\exists k \in \mathbb{N}, a = m \times k$. At the start of the loop, $k = 1$ and on the iterations where $a$ changes, $k$ increases by one.
+        \item $\exists l \in \mathbb{N}, b = n \times l$. by the same logic.
+        \item At each iteration, either $a$ \underline{xor} $b$ increase in value.
+        \end{enumerate}
+    The proof is then largely similar to the one given above. The loop terminates when $a = b$, that is, $m \times k = n \times l$. One easily definable value $y$ where this happens is $y = m \times n$, at which point $k = n$ and $l = m$. At each iternation, exactly one of the values $a$ or $b$ grow, so we know that at some point (if the loop does not terminate earlier):
+        \begin{itemize}
+        \item $a = y \land b < y$ or
+        \item $b = k \land a < y$
+        \end{itemize}
+    Let's look at the first point. $a > b$, so $m \times n > n \times l$. Then the difference between them is $n \times (m - l)$ where $(m - l) \in \mathbb{N}$. This difference is a multiple of $n$, so with continued iterations $l$ approaches $m$. At the point where $l = m$, $a = b = n \times m = k$ so the loop will terminate. The same logic may be applied to the second case, $b = k \land a < y$.
+    \item \underline{Partial Correctness}.
+        \begin{description}
+        \item The program terminates when $a = b$. Based on the invariants given above, we know that $a = m \times k$ and $b = n \times l$.
+        \item Then $k \times m = b$, and $l \times n = b = a$.
+        \item Also, atural number $c$ may be expressed as $c = (xm) \times (yn)$ where $x, y, \in \mathbb{N}$. The termination proof above may be repeated with a $k$ of $c$, in order to prove that the program terminates either at or before the point $a = b = c$.
+        \item Therefore the post-condition is satisfied.
+        \end{description}
+    \end{itemize}
+\end{itemize}
+
+\end{document}
